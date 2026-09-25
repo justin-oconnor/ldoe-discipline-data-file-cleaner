@@ -3,6 +3,18 @@ import os
 import pandas as pd
 import glob
 
+# Defines a dictionary to map sheet names to their corresponding variable column names in the raw discipline data files.
+SHEETS_AND_VARIABLES = {
+        'Gender': 'Gender',
+        'Ethnicity': 'Ethnicity',
+        'SWD': 'Special Education Status',
+        'ED': 'Economically Disadvantaged',
+        'EL': 'English Learner Status',
+        '504': '504 Status',
+        'Homeless': 'Homeless Status',
+        'Grade': 'Grade'
+    }
+
 # Defines function to strip header rows and rename columns for LDOE
 # discipline files. The function takes in the number of header rows to skip,
 # a folder path of files to clean, a destination path for the cleaned files,
@@ -22,7 +34,7 @@ def clean_file(header_rows, file_list, destination_path, sheet, suffix):
                 'LEA Name',
                 'Site Code',
                 'Site Name',
-                'Ethnicity',
+                SHEETS_AND_VARIABLES[sheet],
                 'In-School Suspension - Count',
                 'In-School Suspension - Percent',
                 'Out of School Suspension - Count', 
@@ -46,7 +58,7 @@ def clean_file(header_rows, file_list, destination_path, sheet, suffix):
                 'LEA Name',
                 'Site Code',
                 'Site Name',
-                'Ethnicity',
+                SHEETS_AND_VARIABLES[sheet],
                 'In-School Suspension - Count',
                 'In-School Suspension - Percent',
                 'Out of School Suspension - Count', 
@@ -78,7 +90,7 @@ def main():
     path = input("Enter the path to the directory containing the files: ")
     header_rows = int(input("Enter the number of header rows to skip: "))
     destination_path = input("Enter the destination path for cleaned files: ")
-    sheet = input("Enter the exact sheet name: ")
+    sheet = input("Enter the exact sheet name (Gender, Ethnicity, SWD, ED, EL, 504, Homeless, Grade): ")
     suffix = input("Enter the suffix for the output filenames (YYYY-YYYY-suffix.csv): ")
 
     file_list = path_to_clean(path)
